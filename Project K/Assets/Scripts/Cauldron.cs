@@ -105,7 +105,7 @@ public class Cualdron : MonoBehaviour
         }
         else
         {
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(0, 5, 3, ForceMode.Impulse);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Impulse);
             // Instantiate(collision.gameObject, this.transform, true);
             //Destroy(collision.gameObject);
             //CheckForCompleteRecipe();
