@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30861e2e919dfa84c981e462bce2c1cb, type: 3}
+  m_Name: GrayCubeFruitSeeds
+  m_EditorClassIdentifier: 
+  description: Gray Cubefruit seeds
+  thumbnail: {fileID: 0}
+  gameModel: {fileID: 0}
+  daysToGrow: 0
+  cropToYeild: {fileID: 11400000, guid: 2b1d13208fdaa124294b578d7adfa3ab, type: 2}
+  seedling: {fileID: 3622818304907785022, guid: b967f49568652b9468379404288bcc66, type: 3}
