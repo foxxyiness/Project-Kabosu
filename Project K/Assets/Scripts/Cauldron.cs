@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Cualdron : MonoBehaviour
+public class Cauldron : MonoBehaviour
 {
-    private Item currentItem;
-    /*[SerializeField]
-    private GameObject baseFlavor, flavor, strength;*/
     [SerializeField]
     private bool allowBase, allowFlavor, allowStrength;
-    [SerializeField]
-    private List<Item> itemList = new List<Item>();
+
+    [SerializeField] 
+    private List<Item> itemList;
     [SerializeField]
     private string[] recipes;
     [SerializeField]
     private Item[] recipeResults;
+    [SerializeField]
+    private Transform potionSpawnPoint;
     private void Start()
     {
         allowBase = true;
@@ -23,39 +23,33 @@ public class Cualdron : MonoBehaviour
         allowStrength = true;
 
     }
-    private void Update()
-    {
-        /*CheckForBaseFlavor(baseFlavor);*/
-        //CheckForItemCount();
-    }
     /* void CheckForBaseFlavor(GameObject b)
      {
 
      }*/
-    static bool HasItemName(Item item)
+    private static bool HasItemName(Item item)
     {
         return item;
     }
-    void CheckForCompleteRecipe()
+    private void CheckForCompleteRecipe()
     {
-        string currentRecipe = "";
+        var currentRecipe = "";
         foreach(Item item in itemList)
         {
             if(item != null)
             {
-                currentRecipe += item.getName();
+                currentRecipe += item.GetName();
             }
             else
             {
                 currentRecipe += "null";
             }
         }
-        for(int i = 0; i < recipes.Length; i++)
+        for(var i = 0; i < recipes.Length; i++)
         {
             if (recipes[i] == currentRecipe) 
             {
-                Debug.Log("Potion of Light Created");
-                itemList.RemoveAll(HasItemName);
+                SpawnPotion(i);
                 break;
             }
             else
@@ -65,17 +59,21 @@ public class Cualdron : MonoBehaviour
             }
         }
     }
-
-    void CheckForItemCount()
+    private void SpawnPotion(int recipeIndex)
     {
-        if (itemList.Count == 3)
-        {
-            CheckForCompleteRecipe();
-        }
+        if (recipeIndex > 5) return;
+        Instantiate(recipeResults[0], potionSpawnPoint);
+        Debug.Log("Potion of Light Created");
+        itemList.RemoveAll(HasItemName);
+    }
+    private void CheckForItemCount()
+    {
+        if (itemList.Count != 3) return;
+        CheckForCompleteRecipe();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "BaseFlavor" && allowBase)
+        if (collision.collider.CompareTag("BaseFlavor") && allowBase)
         {
             //baseFlavor = collision.gameObject;
             Debug.Log("Base Flavor Found");
@@ -83,9 +81,10 @@ public class Cualdron : MonoBehaviour
             itemList.Add(collision.gameObject.GetComponent<Item>());
             allowBase = false;
             CheckForItemCount();
+            
 
         }
-        else if (collision.collider.tag == "Flavor" && allowFlavor)
+        else if (collision.collider.CompareTag("Flavor") && allowFlavor)
         {
             //flavor = collision.gameObject;
             Debug.Log("Flavor Found");
@@ -94,7 +93,7 @@ public class Cualdron : MonoBehaviour
             allowFlavor = false;
             CheckForItemCount();
         }
-        else if (collision.collider.tag == "Strength" && allowStrength)
+        else if (collision.collider.CompareTag("Strength") && allowStrength)
         {
             //strength = collision.gameObject;
             Debug.Log("Strength Found");
